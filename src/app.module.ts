@@ -6,6 +6,8 @@ import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Auth } from './middlewares/auth.middleware';
+import { PluzzleController } from './pluzzles/pluzzles.controller';
+import { PluzzleService } from './pluzzles/pluzzles.service';
 
 @Module({
   imports: [
@@ -15,8 +17,8 @@ import { Auth } from './middlewares/auth.middleware';
       signOptions: { expiresIn: '86400s' },
     })
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService, PrismaService],
+  controllers: [AppController, UserController, PluzzleController],
+  providers: [AppService, UserService, PrismaService, PluzzleService],
 })
 
 export class AppModule implements NestModule {
