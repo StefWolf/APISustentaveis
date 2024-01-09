@@ -9,14 +9,12 @@ export class PluzzleService {
         private readonly prisma: PrismaService
     ) { }
 
-    async findUniquePluzzle(pluzzle: Prisma.PluzzlesWhereUniqueInput): Promise<Pluzzles | null> {
+    async findUniquePluzzle(where: Prisma.PluzzlesWhereUniqueInput): Promise<Pluzzles | null> {
         const pluzzleNow = await this.prisma.pluzzles.findUnique({
-            where: {
-                id: pluzzle.id
-            }
+            where
         })
 
-        if (pluzzle) {
+        if (pluzzleNow) {
             return pluzzleNow;
         } else {
             return null;
@@ -47,8 +45,16 @@ export class PluzzleService {
         data: Prisma.PluzzlesCreateInput
     ): Promise<any> {
 
+        const { name } = data;
+
+        if(!name) {
+            return null;
+        }
+
         const newPluzzle = this.prisma.pluzzles.create({
-            data: data
+            data: {
+                name
+            }
         })
 
         if (newPluzzle) {
