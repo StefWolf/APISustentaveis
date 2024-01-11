@@ -8,6 +8,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { Auth } from './middlewares/auth.middleware';
 import { PluzzleController } from './pluzzles/pluzzles.controller';
 import { PluzzleService } from './pluzzles/pluzzles.service';
+import { UsPluzzlesController } from './userspluzzles/uspluzzles.controller';
+import { UsPluzzlesService } from './userspluzzles/uspluzzles.service';
 
 @Module({
   imports: [
@@ -17,8 +19,16 @@ import { PluzzleService } from './pluzzles/pluzzles.service';
       signOptions: { expiresIn: '86400s' },
     })
   ],
-  controllers: [AppController, UserController, PluzzleController],
-  providers: [AppService, UserService, PrismaService, PluzzleService],
+  controllers: [AppController,
+    UserController,
+    PluzzleController,
+    UsPluzzlesController],
+    
+  providers: [AppService,
+    UserService,
+    PrismaService,
+    PluzzleService,
+    UsPluzzlesService],
 })
 
 export class AppModule implements NestModule {
@@ -28,6 +38,6 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'user/login', method: RequestMethod.POST }
       )
-      .forRoutes({ path: '*', method: RequestMethod.ALL});
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }
