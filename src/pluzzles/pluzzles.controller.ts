@@ -73,6 +73,7 @@ export class PluzzleController {
         } else {
             return res.status(HttpStatus.NOT_IMPLEMENTED).json({ message: 'Ops! Ocorreu algum error ao cadastrar Pluzzle' });
         }
+
     }
 
     @Put('pluzzle/update/:id')

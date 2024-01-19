@@ -18,6 +18,9 @@ export class Auth implements NestMiddleware {
 
             const { JWT, userId } = req.query
 
+            console.log(userId);
+            console.log(JWT);
+
             const existUser = await this.prisma.users.findUnique({
                 where: {
                     id: Number(userId)
