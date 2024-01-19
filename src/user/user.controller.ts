@@ -61,9 +61,11 @@ export class UserController {
     ): Promise<Response> {
         const access_token = await this.userService.login(userData);
 
+        console.log(userData);
+
         if (access_token != null) {
 
-            return res.status(HttpStatus.FOUND).json({ message: "Usuário logado com sucesso", access_token });
+            return res.status(HttpStatus.OK).json({ message: "Usuário logado com sucesso", access_token });
         } else {
             return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuário não encontrado" });
         }

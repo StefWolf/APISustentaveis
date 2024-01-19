@@ -31,7 +31,7 @@ export class PluzzleController {
         })
 
         if (pluzzle != null) {
-            return res.status(HttpStatus.FOUND).json({ message: 'Pluzzle encontrado com sucesso!', data: pluzzle })
+            return res.status(HttpStatus.OK).json({ message: 'Pluzzle encontrado com sucesso!', data: pluzzle })
         } else {
             return res.status(HttpStatus.NOT_FOUND).json({ message: 'Pluzzle não encontrado' });
         }
@@ -40,9 +40,11 @@ export class PluzzleController {
     @Get('pluzzles/')
     async getAllPluzzles(
         @Res() res: Response,
-    ): Promise<Response> {
+    ): Promise<Response | any> {
 
-        return res.status(HttpStatus.FOUND).json(await this.pluzzleService.findAllPluzzles({},));
+        const pluzzles: any = await this.pluzzleService.findAllPluzzles({},);
+        console.log(pluzzles);
+        return res.status(HttpStatus.OK).json(pluzzles);
     }
 
     @Post('pluzzle/new')
@@ -69,7 +71,7 @@ export class PluzzleController {
         const deletePluzzle = await this.pluzzleService.deletePluzzle({ id: Number(id) })
 
         if (deletePluzzle) {
-            return res.status(HttpStatus.MOVED_PERMANENTLY).json({ message: 'Pluzzle removido com sucesso!' });
+            return res.status(HttpStatus.OK).json({ message: 'Pluzzle removido com sucesso!' });
         } else {
             return res.status(HttpStatus.NOT_IMPLEMENTED).json({ message: 'Ops! Ocorreu algum error ao cadastrar Pluzzle' });
         }
