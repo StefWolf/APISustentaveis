@@ -65,7 +65,7 @@ export class UserController {
 
         if (access_token != null) {
 
-            return res.status(HttpStatus.OK).json({ message: "Usuário logado com sucesso", access_token });
+            return res.status(HttpStatus.OK).json({ access_token });
         } else {
             return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuário não encontrado" });
         }
