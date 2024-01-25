@@ -59,13 +59,11 @@ export class UserController {
         @Body() userData: { name: string, code: string },
         @Res() res: Response
     ): Promise<Response> {
-        const access_token = await this.userService.login(userData);
+        const user = await this.userService.login(userData);
 
-        console.log(userData);
+        if (user != null) {
 
-        if (access_token != null) {
-
-            return res.status(HttpStatus.OK).json({ access_token });
+            return res.status(HttpStatus.OK).json(user);
         } else {
             return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuário não encontrado" });
         }

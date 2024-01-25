@@ -27,6 +27,25 @@ export class UsPluzzlesService {
         }
     }
 
+    async findRelationUserInPluzzle(params: {
+        where: Prisma.UsersPluzzlesWhereInput
+    }): Promise<any> {
+        const { where } = params;
+
+        const relation = await this.prisma.usersPluzzles.findMany({
+            where: {
+                userId: where.userId,
+                pluzzleId: where.pluzzleId
+            }
+        })
+
+        if(relation) {
+            return relation;
+        } else {
+            return null;
+        }
+    }
+
     async createRelationUserInPluzzle(
         data: { pluzzle: any, user: any, xp: any }
     ): Promise<any> {
