@@ -1,20 +1,20 @@
 # PackLuzzer REST API 
 
-  PackLuzzer é uma extensão inicial de um projeto que merge Realidade Virtual e Web. Com ele a gestão de dados entre usuários e suas pontuações nos pluzzles serão dadas atravéz de sua arquitetura simples e inicial, desenvolvedida com NestJs.
+  PackLuzzer is an initial extension of a project that combines Virtual Reality and Web. With it, data management between users and their intentions in the plugins will be given through its simple and initial architecture, developed with NestJs.
 
 ## Goal
 
 ### General:
 
-Integralizar ambientes gamificados em sistemas web.
+Integrate gamified environments into web systems.
 
 ### Specific:
 
-Criar um ambiente compartilhado na rede para armazenar dados de jogadores e seus scores em pluzzles criados em um ambiente de Realidade Virtual, para um sistema web. 
+Create a shared environment on the network to store player data and their scores in plugins created in a Virtual Reality environment, for a web system.
 
 ## Usage
 
-  Essa API segue o padrão de arquitetura REST, separando cada endpoint de seus métodos e respostas coerentes. Segue abaixo a tabela dos endpoints atuais implementados:
+  This API follows the REST architecture pattern, separating each endpoint from its coherent methods and responses. Below is the table of current implemented endpoints:
 
 #### Endpoints Overview
 
@@ -59,6 +59,8 @@ Criar um ambiente compartilhado na rede para armazenar dados de jogadores e seus
 
 ## Installation
 
+### Ubuntu
+
 ```
 git clone https://github.com/StefWolf/APISustentaveis.git
 
@@ -70,9 +72,9 @@ npm start
 
 ```
 
-### License
+### Upcoming features
 
-
+- [ ] Create Middlwares VerifyUser and VerifyPluzzle
 
 
 
