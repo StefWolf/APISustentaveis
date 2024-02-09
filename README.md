@@ -1,73 +1,78 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# PackLuzzer REST API 
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+  PackLuzzer é uma extensão inicial de um projeto que merge Realidade Virtual e Web. Com ele a gestão de dados entre usuários e suas pontuações nos pluzzles serão dadas atravéz de sua arquitetura simples e inicial, desenvolvedida com NestJs.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Goal
 
-## Description
+### General:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Integralizar ambientes gamificados em sistemas web.
+
+### Specific:
+
+Criar um ambiente compartilhado na rede para armazenar dados de jogadores e seus scores em pluzzles criados em um ambiente de Realidade Virtual, para um sistema web. 
+
+## Usage
+
+  Essa API segue o padrão de arquitetura REST, separando cada endpoint de seus métodos e respostas coerentes. Segue abaixo a tabela dos endpoints atuais implementados:
+
+#### Endpoints Overview
+
+- **User**
+
+| Endpoint | Method | Param | Description |
+|----------|--------|--------|------------|
+| /user/{id} | GET | Id | find a user by id |
+| /users | GET | - | find users |
+| /user/delete/{id} | DELETE | id | delete a user by id |
+| /user/update/{id} | PUT | id, name, email, code, xp | update user's data by id |
+| /user/new | POST | name, email, code, xp, JWT:null | create a new user |
+| /user/login | POST | name, code | login of user |
+
+- **Pluzzle**
+
+| Endpoint | Method | Param | Description |
+|----------|--------|--------|------------|
+| /pluzzle/{id} | GET | id | find a pluzzle by id |
+| /pluzzles | GET | - | find pluzzles | 
+| /pluzzle/new | POST | name | create a new pluzzle |
+| /pluzzle/delete | DELETE | id | delete pluzzle |
+| /pluzzle/update | PUT | id | update pluzzle's data |
+
+- **UsersPluzzles**
+
+| Endpoint | Method | Param | Description |
+|----------|--------|--------|------------|
+| /userPluzzle/update/{id} | PUT | id, pluzzleId, userId, xp | update relation between pluzzle and user |
+| /userPluzzle/{userId}/{idPluzzle} | GET | userId, idPluzzle | find relation |
+| /userPluzzle/new | POST | idUser, idPluzzle | create new relation
+
+#### Middlewares
+
+- **Auth** 
+- **VerifyUser**
+- **VerifyPluzzle** 
+
+## Prerequisites
+
+- NodeJs v20.3.1
 
 ## Installation
 
-```bash
-$ npm install
+```
+git clone https://github.com/StefWolf/APISustentaveis.git
+
+npm install 
+
+npx prisma generate
+
+npm start
+
 ```
 
-## Running the app
+### License
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
