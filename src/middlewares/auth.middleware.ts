@@ -2,9 +2,6 @@ import { HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { PrismaService } from 'src/prisma.service';
 
-/**
- * Para endpoints com GET
- */
 @Injectable()
 export class Auth implements NestMiddleware {
 
@@ -14,53 +11,28 @@ export class Auth implements NestMiddleware {
 
     async use(req: Request, res: Response, next: NextFunction) {
 
-        if (req.method == 'GET') {
+        const token: string = req.headers['authorization'];
 
-            const { JWT, userId } = req.query
+        if (!token) 
+            return res.status(401).json({ auth: false, message: 'No token provided' })
 
-            console.log(userId);
-            console.log(JWT);
-
-            const existUser = await this.prisma.users.findUnique({
-                where: {
-                    id: Number(userId)
-                }
-            })
-
-            if (existUser) {
-                if (existUser.JWT === JWT) {
-                    next();
-                } else {
-                    res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Você não tem permissão para fazer essa ação!' });
-                }
-            } else {
-                res.status(HttpStatus.NOT_FOUND).json({ message: 'Usuário não encontrado' });
+        const existUser = await this.prisma.users.findMany({
+            where: {
+                JWT: token
             }
+        })
 
-        } else if (req.method == 'POST') {
+        if (!existUser)
+            res.status(HttpStatus.NOT_FOUND).json({
+                message: 'Você não tem permissão para fazer essa ação!'
+            });
+            
+        if (existUser[0].JWT != token)
+            res.status(HttpStatus.UNAUTHORIZED).json({
+                message: 'Você não tem permissão para fazer essa ação!'
+            });
 
-            const { JWT, userId } = req.body
-
-            const existUser = await this.prisma.users.findUnique({
-                where: {
-                    id: Number(userId)
-                }
-            })
-
-            if (existUser) {
-                if (existUser.JWT === JWT) {
-                    next();
-                } else {
-                    res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Você não tem permissão para fazer essa ação!' });
-                }
-            } else {
-                res.status(HttpStatus.NOT_FOUND).json({ message: 'Usuário não encontrado' });
-            }
-
-        } else {
-            res.status(HttpStatus.METHOD_NOT_ALLOWED).json({ message: 'Método não permitido' });
-        }
-
+        next();
     }
 }
 

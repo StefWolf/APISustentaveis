@@ -8,6 +8,7 @@ import {
     Delete,
     HttpStatus,
     Res,
+    NotFoundException,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
@@ -50,22 +51,27 @@ export class UserController {
 
     @Post('user/new')
     async createNewUser(
-        @Body() userData: { name: string, email: string, code: string, xp?: string, JWT?: string }): Promise<UsersModel> {
+        @Body() userData: { 
+            name: string, 
+            email: string, 
+            code: string, 
+            xp?: string, 
+            JWT?: string }): Promise<UsersModel> {
         return this.userService.createNewUser(userData);
     }
 
     @Post('user/login')
     async login(
-        @Body() userData: { name: string, code: string },
+        @Body() userData: { 
+            name: string, 
+            code: string },
         @Res() res: Response
     ): Promise<Response> {
         const user = await this.userService.login(userData);
 
-        if (user != null) {
+        if (!user)
+            throw new NotFoundException;
 
-            return res.status(HttpStatus.OK).json(user);
-        } else {
-            return res.status(HttpStatus.NOT_FOUND).json({ message: "Usuário não encontrado" });
-        }
+        return res.status(HttpStatus.OK).json(user);
     }
 }
